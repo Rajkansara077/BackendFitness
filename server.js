@@ -293,7 +293,7 @@ app.post("/api/transactions/bulk", async (req, res) => {
 // PATCH route to update a transaction by ID
 app.patch('/transactions/:id', async (req, res) => {
     const { id } = req.params;
-    const { CustomerId, VehicleNo, OperationDate,Price,VehicleType } = req.body;
+    const { CustomerId, VehicleNo, OperationDate,Price,VehicleType,Notes } = req.body;
 
     try {
         const transaction = await Transaction.findByPk(id);
@@ -307,7 +307,7 @@ app.patch('/transactions/:id', async (req, res) => {
         transaction.Price = Price || transaction.Price;
         transaction.OperationDate = OperationDate || transaction.OperationDate;
         transaction.VehicleType = VehicleType ||transaction.VehicleType;
-
+        transaction.Notes = Notes ||transaction.Notes;
         await transaction.save(); // Save the updated transaction
 
         res.status(200).json({ message: 'Transaction updated successfully', transaction });
